@@ -2,13 +2,13 @@
     <div>
       <input
         v-model="searchQuery"
-        @input="fetchCities"
+        @input="fetchCitiesDebounced"
         @blur="clearResults"
         placeholder="Enter city name..."
       />
       <ul v-if="cities.length">
         <li v-for="city in cities" :key="city.id" @click="selectCity(city)">
-          {{ city.name }}
+          {{ city.name }}, {{ city.adminName1 }}, {{ city.countryCode }}
         </li>
       </ul>
     </div>
@@ -27,36 +27,21 @@
     methods: {
       fetchCitiesDebounced: debounce(function() {
         if (this.searchQuery.length >= 3) {
-            fetch(
-            `https://api.openweathermap.org/geo/1.0/direct?q=${this.searchQuery}&limit=5&appid=687e88bf9fce5309e0cb7ce909791969`
-            )
-            .then((response) => response.json())
-            .then((data) => {
-                this.cities = data;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+          fetch(
+            `http://api.geonames.org/searchJSON?name_startsWith=${this.searchQuery}&cities=cities1000&maxRows=5&username=geocityfinder`
+          )
+          .then((response) => response.json())
+          .then((data) => {
+              this.cities = data.geonames;
+              console.log(data);
+          })
+          .catch((error) => {
+              console.error(error);
+          });
         } else {
             this.cities = [];
         }
-    }, 500),
-      fetchCities() {
-        if (this.searchQuery.length >= 3) {
-          fetch(
-            `https://api.openweathermap.org/geo/1.0/direct?q=${this.searchQuery}&limit=5&appid=687e88bf9fce5309e0cb7ce909791969`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              this.cities = data;
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        } else {
-          this.cities = [];
-        }
-      },
+      }, 600),
       clearResults() {
         setTimeout(() => {
           this.cities = [];

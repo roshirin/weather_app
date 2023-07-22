@@ -3,7 +3,7 @@
     <CitySearch @city-selected="getWeather" />
     <div v-if="weather">
       <h2>Weather for {{ selectedCity }}</h2>
-      <p>Temperature: {{ weather.main.temp }}°C</p>
+      <p>Temperature: {{ Math.round(weather.main.temp) }}°C</p>
       <p>Description: {{ weather.weather[0].description }}</p>
     </div>
   </div>
@@ -14,7 +14,12 @@ import CitySearch from '../components/CitySearch.vue';
 
 export default {
   // ... other options ...
-
+  data() {
+      return {
+        selectedCity: '', // Initialize the selectedCity property to an empty string
+        weather: null, // Initialize the weather property to null
+      };
+    },
   methods: {
     getWeather(city) {
       this.selectedCity = city;
@@ -23,6 +28,7 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           this.weather = data;
         })
         .catch((error) => {
