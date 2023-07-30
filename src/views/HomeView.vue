@@ -1,43 +1,83 @@
 <template>
-  <div class="home">
-    <CitySearch @city-selected="getWeather" />
-    <div v-if="weather">
-      <h2>Weather for {{ selectedCity }}</h2>
-      <p>Temperature: {{ Math.round(weather.main.temp) }}°C</p>
-      <p>Description: {{ weather.weather[0].description }}</p>
+  <div>
+    <div class="weather-blocks-container">
+      <div v-for="weatherBlock in weatherBlocks" :key="weatherBlock.id">
+        <WeatherBlock 
+          :isFirstBlock="weatherBlocks.length === 1"
+          @removeBlock="showRemoveModal(weatherBlock.id)"
+        />
+      </div>
+
+      <RemoveWeatherBlockModal
+        v-if="isRemoveModalShown"
+        @confirmRemoval="removeWeatherBlock()"
+        @cancelRemoval="closeRemoveModal()"
+      />
     </div>
+
+    <AddWeatherBlockButton
+      v-if="weatherBlocks.length < 5"
+      @click="addWeatherBlock"
+    />
   </div>
 </template>
 
 <script>
-import CitySearch from '../components/CitySearch.vue';
+  import WeatherBlock from '@/components/WeatherBlock.vue';
+  import RemoveWeatherBlockModal from '@/components/RemoveWeatherBlockModal.vue';
+  import AddWeatherBlockButton from '@/components/AddWeatherBlockButton.vue';
+  import { v4 as uuidv4 } from 'uuid';
 
-export default {
-  // ... other options ...
-  data() {
+  export default {
+    components: {
+      WeatherBlock,
+      RemoveWeatherBlockModal,
+      AddWeatherBlockButton,
+    },
+
+    data() {
       return {
-        selectedCity: '', // Initialize the selectedCity property to an empty string
-        weather: null, // Initialize the weather property to null
+        weatherBlocks: [],
+        favorites: [],
+        isRemoveModalShown: false,
+        blockRemovedId: null,
       };
     },
-  methods: {
-    getWeather(city) {
-      this.selectedCity = city;
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=687e88bf9fce5309e0cb7ce909791969&units=metric`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          this.weather = data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+
+    mounted() {
+      this.addWeatherBlock();
     },
-  },
-  components: {
-    CitySearch,
-  },
-};
+
+    methods: {
+      addWeatherBlock() {
+        const id = uuidv4();
+
+        this.weatherBlocks.push({
+          id,
+        });
+      },
+
+      showRemoveModal(blockId) {
+        this.isRemoveModalShown = true;
+        this.blockRemovedId = blockId;
+      },
+
+      closeRemoveModal() {
+        this.isRemoveModalShown = false;
+        this.blockRemovedId = null;
+      },
+
+      removeWeatherBlock() {
+        if (this.blockRemovedId) {
+          const filteredBlocks = this.weatherBlocks.filter(({ id }) => {
+            return id !== this.blockRemovedId;
+          });
+
+          this.weatherBlocks = filteredBlocks;
+        }
+
+        this.closeRemoveModal();
+      },
+    },
+  };
 </script>
