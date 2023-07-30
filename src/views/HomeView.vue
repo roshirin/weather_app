@@ -5,6 +5,7 @@
         <WeatherBlock 
           :isFirstBlock="weatherBlocks.length === 1"
           @removeBlock="showRemoveModal(weatherBlock.id)"
+          @extraFavoriteAdded="handleMaxFavoritesReached"
         />
       </div>
 
@@ -12,6 +13,12 @@
         v-if="isRemoveModalShown"
         @confirmRemoval="removeWeatherBlock()"
         @cancelRemoval="closeRemoveModal()"
+      />
+
+      <MaxFavoritesModal
+        v-if="isMaxFavoritesModalShown"
+        :extraFavoriteCity="extraFavoriteCity"
+        @closeModal="closeMaxFavoritesModal()"
       />
     </div>
 
@@ -23,16 +30,18 @@
 </template>
 
 <script>
+  import { v4 as uuidv4 } from 'uuid';
   import WeatherBlock from '@/components/WeatherBlock.vue';
   import RemoveWeatherBlockModal from '@/components/RemoveWeatherBlockModal.vue';
   import AddWeatherBlockButton from '@/components/AddWeatherBlockButton.vue';
-  import { v4 as uuidv4 } from 'uuid';
+  import MaxFavoritesModal from '@/components/MaxFavoritesModal.vue';
 
   export default {
     components: {
       WeatherBlock,
       RemoveWeatherBlockModal,
       AddWeatherBlockButton,
+      MaxFavoritesModal,
     },
 
     data() {
@@ -41,6 +50,8 @@
         favorites: [],
         isRemoveModalShown: false,
         blockRemovedId: null,
+        isMaxFavoritesModalShown: false,
+        extraFavoriteCity: null,
       };
     },
 
@@ -78,6 +89,15 @@
 
         this.closeRemoveModal();
       },
+
+      handleMaxFavoritesReached(cityName) {
+        this.extraFavoriteCity = cityName;
+        this.isMaxFavoritesModalShown = true;
+      },
+
+      closeMaxFavoritesModal() {
+        this.isMaxFavoritesModalShown = false;
+      }
     },
   };
 </script>

@@ -20,8 +20,9 @@
 
         <FavoritesButton 
           v-if="cardData"
-          :isInFavorites="isInFavorites"
-          @click="handleFavoriteToggle" 
+          :selectedCity="selectedCity"
+          :coordinates="coordinates"
+          @extraFavoriteAdded="handleExtraFavorite"
         />
 
         <RemoveWeatherBlockButton
@@ -61,8 +62,6 @@
     getFiveDaysChartData,
     prepareCardForecastData,
     getBackgroundImage,
-    loadFavoritesFromStorage,
-    saveFavoritesToStorage,
     getCoordinatesByIp,
   } from '@/helpers';
 
@@ -88,7 +87,6 @@
         selectedCity: '',
         coordinates: [],
         isFiveDaysChart: false,
-        isInFavorites: false,
         currentData: null,
         forecastData: null,
         cardData: null,
@@ -97,8 +95,6 @@
     },
 
     mounted() {
-      this.favorites = loadFavoritesFromStorage();
-
       if (this.isFirstBlock) {
         this.loadDataForFirstBlock();
       }
@@ -111,7 +107,6 @@
     watch: {
       cardData: {
         handler(newData) {
-          this.getFavoriteStatus();
           this.backgroundImage = getBackgroundImage(newData[0].backgroundSrc);
         }
       }
@@ -163,54 +158,6 @@
         this.isLoadingData = false;
       },
 
-      addToFavorites(storageEntry) {
-        this.favorites.push(storageEntry);
-        console.log(this.favorites);
-        saveFavoritesToStorage(this.favorites);
-      },
-
-      removeFromFavorites(storageEntry) {
-        this.favorites = this.favorites.filter(
-          entry => entry.cityName !== storageEntry.cityName
-        );
-        saveFavoritesToStorage(this.favorites);
-      },
-
-      getFavoriteStatus() {
-        this.isInFavorites = this.favorites.some(
-          entry => entry.cityName === this.selectedCity,
-        );
-      },
-
-      toggleFavoriteStatus() {
-        this.isInFavorites = !this.isInFavorites;
-      },
-
-      handleFavoriteToggle() {
-        const favorites = this.favorites;
-        const storageEntry = {
-          cityName: this.selectedCity,
-          coordinates: this.coordinates,
-        };
-        const isFavorite = favorites.some(
-          entry => entry.cityName === storageEntry.cityName
-        );
-
-        if (isFavorite) {
-          this.removeFromFavorites(storageEntry);
-          this.toggleFavoriteStatus();
-
-          return;
-        }
-
-        if (favorites.length > 5) {
-          return;
-        }
-
-        this.addToFavorites(storageEntry);
-        this.toggleFavoriteStatus();
-      },
-
       loadDataForFavorite() {
         const {
           cityName,
@@ -230,15 +177,16 @@
         } catch (error) {
           console.error('Error fetching user coordinates or weather data:', error);
         }
-      }
+      },
+
+      handleExtraFavorite(cityName) {
+        this.$emit('extraFavoriteAdded', cityName);
+      },
     },
   };
 </script>
 
 <style lang="scss">
-  @import '../styles/utils/mixins';
-  @import '../styles/utils/vars';
-
   .weather-block {
     position: relative;
     min-height: 260px;

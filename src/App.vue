@@ -13,9 +13,6 @@
 </template>
 
 <style lang="scss">
-  @import 'styles/utils/mixins';
-  @import 'styles/utils/vars';
-
   body, ul {
     margin: 0;
     padding: 0;
