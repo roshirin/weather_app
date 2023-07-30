@@ -32,14 +32,21 @@
       </div>
     </div>
 
-    <div v-if="cardData" class="weather-block__content weather-info">
+    <div class="weather-block__content weather-info" v-if="cardData || isLoading">
+      <PreLoader 
+        v-if="isLoading"
+        class="weather-block__preloader"
+      />
+
       <WeatherCard
+        v-if="cardData && !isLoading"
         :selectedCity="selectedCity"
         :cardData="cardData"
         class="weather-info__item"
       />
 
       <WeatherChart
+        v-if="cardData"
         :chartData="chartData"
         :isFiveDaysChart="isFiveDaysChart"
         class="weather-info__item"
@@ -55,6 +62,7 @@
   import RemoveWeatherBlockButton from '@/components/RemoveWeatherBlockButton.vue';
   import FiveDaysSwitcher from '@/components/FiveDaysSwitcher.vue';
   import FavoritesButton from '@/components/FavoritesButton.vue';
+  import PreLoader from '@/components/PreLoader.vue';
   import { getWeatherForToday, getWeatherFor5Days } from '@/api';
   import {
     getCurrentData,
@@ -73,6 +81,7 @@
       FiveDaysSwitcher,
       FavoritesButton,
       RemoveWeatherBlockButton,
+      PreLoader,
     },
     
     props: {
@@ -143,7 +152,7 @@
       },
 
       getWeatherData: async function (lat, lon, cityName) {
-        this.isLoadingData = true;
+        this.isLoading = true;
         const [currentData, forecastData] = await Promise.all([
           getWeatherForToday(lat, lon),
           getWeatherFor5Days(lat, lon),
@@ -155,7 +164,7 @@
         this.forecastData = forecastData;
 
         this.updateDisplayedData(this.isFiveDaysChart);
-        this.isLoadingData = false;
+        this.isLoading = false;
       },
 
       loadDataForFavorite() {
@@ -188,7 +197,6 @@
 
 <style lang="scss">
   .weather-block {
-    position: relative;
     min-height: 260px;
     padding: 20px 0 60px;
 
@@ -245,6 +253,12 @@
 
       @include onTablet {
         margin-top: 30px;
+      }
+
+      &__preloader {
+        left: 30px;
+        top: 10px;
+        max-width: 50px;
       }
     }
   }

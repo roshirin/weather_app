@@ -5,13 +5,16 @@
       @input="getAutocomplete"
       @blur="clearAutocomplete"
       placeholder="Enter city name..."
+      :disabled="isLoading"
     />
 
-    <ul 
+    <PreLoader class="search-block__preloader" v-if="isLoading" />
+ 
+    <ul
       v-if="cities.length" 
       class="search-block__autocomplete autocomplete-variants"
-    >
-      <li 
+    >    
+      <li
         v-for="city in cities" 
         :key="city.id" 
         @click="selectCity(city)"
@@ -25,17 +28,26 @@
 
 <script> 
   import { debounce } from 'lodash';
+  import PreLoader from '@/components/PreLoader.vue';
   import { getAutocompleteCities } from '@/api';
 
   export default {
+    components: {
+      PreLoader,
+    },
+
     data() {
       return {
         searchQuery: '',
         cities: [],
+        isLoading: false,
       };
     },
+
     methods: {
       getAutocomplete: debounce(async function() {
+        this.isLoading = true;
+
         const query = this.searchQuery.trim()
 
         if (query.length >= 3) {
@@ -45,12 +57,16 @@
         } else {
           this.cities = [];
         }
+
+        this.isLoading = false;
       }, 600),
+
       clearAutocomplete() {
         setTimeout(() => {
           this.cities = [];
         }, 200);
       },
+
       selectCity(city) {
         const {
           name,
@@ -67,8 +83,6 @@
 </script>
 
 <style lang="scss">
-  @import '../styles/utils/vars';
-
   .search-block {
     position: relative;
 
@@ -88,9 +102,21 @@
       &:focus-visible {
         outline: 1px solid $color-dark-grey;
       }
+
+      &:disabled {
+        color: transparent;
+      }
     }
+  
     &__autocomplete {
       margin-top: 8px;
+    }
+
+    &__preloader {
+      position: absolute;
+      left: 20px;
+      top: -14px;
+      max-width: 42px;
     }
   }
 
