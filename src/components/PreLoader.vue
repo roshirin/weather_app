@@ -16,8 +16,8 @@
       width: 28px;
       height: 28px;
       margin: 1em auto;
-      border: 0.3em solid #ddd;
-      border-left-color: #000;
+      border: 0.3em solid $color-light-grey;
+      border-left-color: $color-black;
       animation: loader 1.2s infinite linear;
     }
   }

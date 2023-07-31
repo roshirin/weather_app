@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-page">
     <div class="weather-blocks-container">
       <div v-for="weatherBlock in weatherBlocks" :key="weatherBlock.id">
         <WeatherBlock 
@@ -25,6 +25,7 @@
     <AddWeatherBlockButton
       v-if="weatherBlocks.length < 5"
       @click="addWeatherBlock"
+      class="home-page__add-button"
     />
   </div>
 </template>
@@ -101,3 +102,11 @@
     },
   };
 </script>
+
+<style lang="scss">
+  .home-page {
+    &__add-button {
+      margin-top: 20px;
+    }
+  }
+</style>

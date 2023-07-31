@@ -3,8 +3,6 @@
 </template>
 
 <style lang="scss">
-  @import '../styles/utils/vars';
-
   .remove-block-button {
     height: 34px;
     width: 34px;

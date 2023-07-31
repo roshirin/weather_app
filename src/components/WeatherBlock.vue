@@ -1,7 +1,7 @@
 <template>
   <div 
     class="weather-block"
-    :style="{ 'background-image': cardData && `url(${backgroundImage})` }"
+    :style="{ 'background-image': backgroundImage && `url(${backgroundImage})` }"
   >
     <div class="weather-block__header">
       <CitySearch
@@ -104,6 +104,10 @@
     },
 
     mounted() {
+      if (!this.favoritedEntry && !this.isFirstBlock) {
+        this.backgroundImage = getBackgroundImage('few-clouds.jpg');
+      }
+      
       if (this.isFirstBlock) {
         this.loadDataForFirstBlock();
       }
@@ -177,6 +181,8 @@
       },
 
       async loadDataForFirstBlock() {
+        this.isLoading = true;
+
         try {
           if ('geolocation' in navigator) {
             const coordinates = await getCoordinatesByIp();
@@ -185,6 +191,8 @@
           }
         } catch (error) {
           console.error('Error fetching user coordinates or weather data:', error);
+  
+          this.isLoading = false;
         }
       },
 
@@ -196,97 +204,5 @@
 </script>
 
 <style lang="scss">
-  .weather-block {
-    min-height: 260px;
-    padding: 20px 0 60px;
-
-    background-image: url('../img/backgrounds/default-sky.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: $color-white;
-
-    @include onTablet {
-      padding: 30px;
-    }
-
-    @include onDesktop {  
-      border-radius: 50px;
-    }
-
-    &__header {
-      display: flex;
-      padding: 0 20px;
-      flex-wrap: wrap-reverse;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-
-      @include onTablet {
-        padding: 0;
-      }
-    } 
-
-    &__buttons {
-      display: flex;
-      width: 100%;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-
-      @include onTablet {
-        gap: 30px;
-        width: auto;
-      }
-
-      @include onDesktop {
-        gap: 40px;
-      }
-    }
-
-    &__city {
-      flex: 1 1 auto;
-    }
-
-    &__content {
-      margin-top: 20px;
-
-      @include onTablet {
-        margin-top: 30px;
-      }
-
-      &__preloader {
-        left: 30px;
-        top: 10px;
-        max-width: 50px;
-      }
-    }
-  }
-
-  .weather-info {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 20px 0 0;
-
-    background-color: $color-back-blue;
-
-    @include onTablet {
-      padding: 30px;
-      border-radius: 30px;
-    }
-
-    @include onDesktop {
-      flex-direction: row;
-      gap: 40px;
-
-      &__item {
-        flex-basis: 50%;
-      }
-    }
-  }
-
-  .switcher-container {
-    flex-grow: 1;
-  }
+  @import '../styles/weather-block.scss';
 </style>

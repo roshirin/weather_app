@@ -28,8 +28,6 @@
 </script>
 
 <style lang="scss">
-  @import '../styles/utils/vars';
-
   .mode-switcher {
     display: inline-block;
     position: relative;

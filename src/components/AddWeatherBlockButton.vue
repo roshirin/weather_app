@@ -3,13 +3,9 @@
 </template>
 
 <style lang="scss">
-  @import '../styles/utils/mixins';
-  @import '../styles/utils/vars';
-
   .add-block-button {
     width: 100%;
     height: 60px;
-    margin-top: 5px;
 
     border: none;
     background-color: $color-white;
@@ -23,12 +19,11 @@
     transition: all 0.2s;
 
     @include onDesktop {
-      margin-top: 10px;
       border-radius: 30px;
     }
 
     &:hover {
-      background-color: $color-white-button-hover;
+      background-color: $color-light-grey;
     }
   }
 </style>

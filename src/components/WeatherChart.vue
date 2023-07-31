@@ -1,6 +1,6 @@
 <template>
   <div class="weather-chart">
-    <div class="weather-chart__header">Temperature forecast</div>
+    <div class="weather-chart__header">{{ $t('chartHeader') }}</div>
     <canvas ref="weatherChart"></canvas>
   </div>
 </template>
@@ -143,14 +143,12 @@
 </script>
 
 <style lang="scss">
-  @import '../styles/utils/mixins';
-  @import '../styles/utils/vars';
-
   .weather-chart {
     padding-top: 10px;
     border-top: 1px solid #8dc1ca;
 
     @include onDesktop {
+      flex-basis: 56%;
       padding-left: 20px;
       border-top: none;
       border-left: 1px solid #8dc1ca;

@@ -56,11 +56,12 @@ export const getFiveDaysChartData = (data) => {
   return data.map((forecastEntry) => {
     const {
       date,
+      month,
       dayTemp,
       nightTemp,
     } = forecastEntry;
 
-    return { date, dayTemp, nightTemp };
+    return { date, month, dayTemp, nightTemp };
   });
 };
 
@@ -94,7 +95,8 @@ export const prepareCardForecastData = (data, today) => {
     if (dayTemps.length >= 5) {
       acc.push({
         id,
-        date: `${date} ${MONTHS[month]}`,
+        date: date,
+        month: MONTHS[month],
         nightTemp: getAverageFromArray(nightTemps),
         dayTemp: getAverageFromArray(dayTemps),
         clouds: getAverageFromArray(cloudsIds),
@@ -112,7 +114,7 @@ export const prepareCardForecastData = (data, today) => {
 
 export const prepareChartData = (chartData, isFiveDaysChart) => {
   if (isFiveDaysChart) {
-    const xAxisLabels = chartData.map(entry => entry.date);
+    const xAxisLabels = chartData.map(entry => `${entry.date} ${entry.month}`);
     const graphDayTemp = chartData.map(entry => entry.dayTemp);
     const graphNightTemp = chartData.map(entry => entry.nightTemp);
 

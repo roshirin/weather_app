@@ -14,7 +14,7 @@
           :key="day.id" 
           class="days-item"
         >
-          <div class="days-item__date">{{ day.date }}</div>
+          <div class="days-item__date">{{ day.date }} {{ $t(`months.${day.month}`) }}</div>
           <div class="days-item__day-temp temp-container">
             <img src="../img/icons/icon-day.svg" class="temp-container__icon" />
             <div class="temp-container__info">
@@ -48,10 +48,8 @@
 </script>
 
 <style lang="scss">
-  @import '../styles/utils/mixins';
-  @import '../styles/utils/vars';
-
   .weather-card {
+    flex-basis: 44%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;

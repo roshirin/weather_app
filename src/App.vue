@@ -1,9 +1,17 @@
 <template>
   <header class="header">
-    <nav class="navigation">
-      <router-link to="/">Home</router-link>
-      <router-link to="/favorites">Favorites</router-link>
-    </nav>
+    <div class="header__content container">
+      <nav class="navigation">
+        <router-link :to="{ name: 'home' }">{{ $t('header.home') }}</router-link>
+        <router-link :to="{ name: 'favorites' }">{{ $t('header.favorites') }}</router-link>
+      </nav>
+      <div class="language">
+        <select class="language__select" v-model="$i18n.locale">
+          <option value="en">en</option>
+          <option value="uk">укр</option>
+        </select>
+      </div>
+    </div>
   </header>
   <main class="main">
     <div class="container page">
@@ -30,10 +38,19 @@
   }
 
   .header {
+    min-height: 72px;
     background-color: $color-light-blue;
+
+    &__content {
+      box-sizing: border-box;
+      display: flex;
+      padding: 0 40px;
+      justify-content: space-between;
+    }
   }
 
   .main {
+    padding-bottom: 20px;
     flex-grow: 1;
     background: linear-gradient(to bottom, $color-light-blue, $color-lightest-blue);
   }
@@ -67,6 +84,7 @@
 
   .page {
     @include onDesktop {
+      box-sizing: border-box;
       padding: 0 30px;
     }
   }
@@ -78,6 +96,19 @@
 
     @include onTablet {
       gap: 30px;
+    }
+  }
+
+  .language {
+    display: flex;
+    align-items: center;
+
+    &__select {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      font-size: 20px;
+      color: $color-font-dark;
     }
   }
 </style>
