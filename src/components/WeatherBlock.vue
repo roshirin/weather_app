@@ -1,7 +1,7 @@
 <template>
   <div 
     class="weather-block"
-    :style="{ 'background-image': backgroundImage && `url(${backgroundImage})` }"
+    :style="backgroundImage && { 'background-image': `url(${backgroundImage})` }"
   >
     <div class="weather-block__header">
       <CitySearch
@@ -91,7 +91,7 @@
 
     data() {
       return {
-        backgroundImage: 'none',
+        backgroundImage: '',
         isLoading: false,
         selectedCity: '',
         coordinates: [],

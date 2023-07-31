@@ -11,7 +11,7 @@ The Weather App is a Vue.js application that allows users to get current weather
 - Vue.js
 - SCSS
 - Chart.js
-- GeoNames API
+- LocationIQ API
 - OpenWeather API
 - Vue I18n library
 

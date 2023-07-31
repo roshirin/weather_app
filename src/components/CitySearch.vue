@@ -20,7 +20,7 @@
         @click="selectCity(city)"
         class="autocomplete-variants__element"
       >
-        {{ city.name }}, {{ city.adminName1 }}, {{ city.countryCode }}
+        {{ city.display_name }}
       </li>
     </ul>
   </div>
@@ -30,6 +30,7 @@
   import { debounce } from 'lodash';
   import PreLoader from '@/components/PreLoader.vue';
   import { getAutocompleteCities } from '@/api';
+  import i18n from '@/main';
 
   export default {
     components: {
@@ -51,9 +52,10 @@
         const query = this.searchQuery.trim()
 
         if (query.length >= 3) {
-          const response = await getAutocompleteCities(query);
+          const response = await getAutocompleteCities(query, i18n.global.t('language'));
 
-          this.cities = response.geonames;
+          this.cities = response;
+          console.log(this.cities);
         } else {
           this.cities = [];
         }
@@ -69,14 +71,14 @@
 
       selectCity(city) {
         const {
-          name,
+          display_place,
           lat,
-          lng: lon,
+          lon,
         } = city;
 
         this.searchQuery = name;
         this.cities = [];
-        this.$emit('city-selected', lat, lon, name);
+        this.$emit('city-selected', lat, lon, display_place);
       },
     },
   };

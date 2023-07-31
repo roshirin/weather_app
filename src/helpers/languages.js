@@ -1,5 +1,6 @@
 export const messages = {
   en: {
+    language: 'en',
     header: {
       home: 'Home',
       favorites: 'Favorites',
@@ -27,6 +28,7 @@ export const messages = {
     favoritesEmptyMsg: 'Add something first.'
   },
   uk: {
+    language: 'uk',
     header: {
       home: 'Головна',
       favorites: 'Улюблене',
