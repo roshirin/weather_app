@@ -1,24 +1,35 @@
 # weather_app
 
-## Project setup
-```
-npm install
-```
+[Live Demo](https://roshirin.github.io/weather_app/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Description
 
-### Compiles and minifies for production
-```
-npm run build
-```
+The Weather App is a Vue.js application that allows users to get current weather information and a temperature forecast for various cities.
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Core technologies used
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Vue.js
+- SCSS
+- Chart.js
+- GeoNames API
+- OpenWeather API
+
+### Features
+
+- Current weather information display
+- Today's or five-days forecast for selected cities
+- Add and remove weather blocks
+- Add blocks to Favorites list
+- Language en/uk localization
+- Change in appearance depending on weather conditions
+- Responsive design
+
+## Installation
+
+1. Clone the repository.
+2. Install dependencies: `npm install`
+
+## Usage
+
+1. Run the development server: `npm run serve`
+2. Open the app in your web browser: `http://localhost:8080`
