@@ -25,7 +25,10 @@ export const messages = {
     favoritesExceedModalMsg1: 'To add',
     favoritesExceedModalMsg2: 'first remove another city: maximum 5 favorites',
     favoritesEmptyHeader: 'Favorites list is empty!',
-    favoritesEmptyMsg: 'Add something first.'
+    favoritesEmptyMsg: 'Add something first.',
+    temperature: 'Temperature (°C)',
+    dayTemperature: 'Day Temperature (°C)',
+    nightTemperature: 'Night Temperature (°C)',
   },
   uk: {
     language: 'uk',
@@ -53,6 +56,9 @@ export const messages = {
     favoritesExceedModalMsg1: 'Щоб додати',
     favoritesExceedModalMsg2: 'спочатку видаліть щось: не більше 5 улюблених міст.',
     favoritesEmptyHeader: 'Жодного улюбленого міста!',
-    favoritesEmptyMsg: 'Додайте щось спочатку.'
+    favoritesEmptyMsg: 'Додайте щось спочатку.',
+    temperature: 'Температура (°C)',
+    dayTemperature: 'Температура вдень (°C)',
+    nightTemperature: 'Температура вночі (°C)',
   },
 };

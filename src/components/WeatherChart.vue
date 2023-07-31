@@ -8,6 +8,7 @@
 <script>
   import Chart from 'chart.js/auto';
   import { prepareChartData } from '@/helpers';
+  import i18n from '@/main';
 
   export default {
     props: {
@@ -45,17 +46,17 @@
           labels: xAxisLabels,
           datasets: [
             {
-              label: 'Temperature (°C)',
+              label: i18n.global.t('temperature'),
               data: graphTemperature,
               borderColor: 'rgb(255, 255, 255)',
             },
             {
-              label: 'Day Temperature (°C)',
+              label: i18n.global.t('dayTemperature'),
               data: graphDayTemp,
               borderColor: 'rgb(255, 255, 255)',
             },
             {
-              label: 'Night Temperature (°C)',
+              label: i18n.global.t('nightTemperature'),
               data: graphNightTemp,
               borderColor: 'rgb(0, 0, 255)',
             },

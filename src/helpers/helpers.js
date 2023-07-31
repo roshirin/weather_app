@@ -1,4 +1,5 @@
 import { WEATHER_ICONS, BACKGROUND_IMAGES, MONTHS } from './constants';
+import i18n from '@/main';
 
 export const getAverageFromArray = (temps) => {
   return Math.round(temps.reduce((acc, temp) => acc + temp) / temps.length);
@@ -114,7 +115,7 @@ export const prepareCardForecastData = (data, today) => {
 
 export const prepareChartData = (chartData, isFiveDaysChart) => {
   if (isFiveDaysChart) {
-    const xAxisLabels = chartData.map(entry => `${entry.date} ${entry.month}`);
+    const xAxisLabels = chartData.map(entry => `${entry.date} ${i18n.global.t(`months.${entry.month}`)}`);
     const graphDayTemp = chartData.map(entry => entry.dayTemp);
     const graphNightTemp = chartData.map(entry => entry.nightTemp);
 
