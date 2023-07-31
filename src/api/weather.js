@@ -10,7 +10,7 @@ export const getWeatherForToday = async (lat, lon) => {
   )
   .then(response => response.json())
   .catch(error => {
-      console.error(error);
+    throw new Error(error);
   });
 
   return data;
@@ -24,7 +24,7 @@ export const getWeatherFor5Days = async (lat, lon) => {
   )
   .then(response => response.json())
   .catch(error => {
-      console.error(error);
+    throw new Error(error);
   });
 
   return data;

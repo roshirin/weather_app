@@ -41,7 +41,7 @@
     methods: {
       addToFavorites(storageEntry) {
         this.favorites.push(storageEntry);
-        console.log(this.favorites);
+
         saveFavoritesToStorage(this.favorites);
       },
 

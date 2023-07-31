@@ -190,9 +190,9 @@
             this.getWeatherData(coordinates[0], coordinates[1]);
           }
         } catch (error) {
-          console.error('Error fetching user coordinates or weather data:', error);
-  
           this.isLoading = false;
+
+          throw new Error(error);
         }
       },
 

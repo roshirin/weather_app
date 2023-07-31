@@ -5,7 +5,7 @@
       @input="getAutocomplete"
       @blur="clearAutocomplete"
       :placeholder="$t('cityInputPlaceholder')"
-      :disabled="isLoading"
+      :class="{ 'transparent-font-color': isLoading }"
     />
 
     <PreLoader class="search-block__preloader" v-if="isLoading" />
@@ -52,10 +52,10 @@
         const query = this.searchQuery.trim()
 
         if (query.length >= 3) {
-          const response = await getAutocompleteCities(query, i18n.global.t('language'));
+          const lang = i18n.global.t('language');
+          const response = await getAutocompleteCities(query, lang);
 
           this.cities = response;
-          console.log(this.cities);
         } else {
           this.cities = [];
         }
@@ -139,5 +139,9 @@
         background-color: $color-light-grey;
       }
     }
+  }
+  
+  .transparent-font-color {
+    color: transparent;
   }
 </style>

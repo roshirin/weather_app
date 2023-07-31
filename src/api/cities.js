@@ -1,6 +1,6 @@
 const BASE_URL = 'https://eu1.locationiq.com/v1/autocomplete';
 const format = 'format=json';
-const limit = 'limit=6';
+const limit = 'limit=5';
 const tag = 'tag=place:city,place:town';
 
 export const getAutocompleteCities = async (searchQuery, language) => {
@@ -15,8 +15,6 @@ export const getAutocompleteCities = async (searchQuery, language) => {
 
     return data;
   } catch (error) {
-    console.error(error);
-
-    return null;
+    throw new Error(error);
   }
 };
