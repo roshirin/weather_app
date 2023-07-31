@@ -4,7 +4,7 @@
       v-model="searchQuery"
       @input="getAutocomplete"
       @blur="clearAutocomplete"
-      placeholder="Enter city name..."
+      :placeholder="$t('cityInputPlaceholder')"
       :disabled="isLoading"
     />
 
