@@ -1,7 +1,7 @@
 <template>
   <button class="favorites-button" @click="handleFavoriteToggle">
-    <img v-if="isInFavorites" src="../img/icons/icon-star-full.svg" alt="Favorite Star" class="favorites-icon" />
-    <img v-else src="../img/icons/icon-star-empty.svg" alt="Empty Favorite Star" class="favorites-icon" />
+    <img v-if="isInFavorites" src="../img/icons/icon-star-full.svg" class="favorites-icon" />
+    <img v-else src="../img/icons/icon-star-empty.svg" class="favorites-icon" />
   </button>
 </template>
 

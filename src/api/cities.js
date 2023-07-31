@@ -1,4 +1,4 @@
-const BASE_URL = 'http://api.geonames.org/searchJSON';
+const BASE_URL = 'https://api.geonames.org/searchJSON';
 const populationOptions = [
   'cities=cities1000',
   'cities=cities5000',
